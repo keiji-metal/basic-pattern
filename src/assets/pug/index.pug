@@ -1,0 +1,19 @@
+doctype html
+html(lang="ja")
+    head
+        meta(charset="UTF-8")
+        meta(name="viewport" content="width=device-width, initial-scale=1.0")
+        meta(http-equiv="X-UA-Compatible" content="IE=edge")
+        // 検索にヒットさせない
+        meta(name="robots" content="noindex")
+        // title
+        title ここを編集する
+        // description
+        meta(name="description" content="このページの説明文")
+        // keywardは不要なら消してよい
+        meta(name="keywords" content="キーワード1, キーワード2, キーワード3")
+        link(rel="stylesheet" href="./assets/css/style.css")
+    body
+        include layout/_header.pug
+        include layout/_contact.pug
+        include layout/_footer.pug
