@@ -1,86 +1,116 @@
-// 定義
+// -------------------------------------------------------------
+// import
+import gulp from "gulp";
+import dartSass from "sass";
+import gulpSass from "gulp-sass";
+import postcss from "gulp-postcss";
+import autoprefixer from "autoprefixer";
+import cssSorter from "css-declaration-sorter";
+import mmq from "gulp-merge-media-queries";
+import browserSyncLib from "browser-sync";
+import cleanCss from "gulp-clean-css";
+import uglify from "gulp-uglify";
+import rename from "gulp-rename";
+import htmlBeautify from "gulp-html-beautify";
+import pug from "gulp-pug";
+import htmlmin from "gulp-html-minifier-terser";
+import plumber from "gulp-plumber";
+import notify from "gulp-notify";
+import imagemin from "gulp-imagemin";
+import imageminWebp from "imagemin-webp";
+import webp from "gulp-webp";
 
-const gulp = require("gulp");
-const sass = require("gulp-sass")(require("sass"));
-const postcss = require("gulp-postcss");
-const autoprefixer = require("autoprefixer");
-const cssSorter = require("css-declaration-sorter");
-const mmq = require("gulp-merge-media-queries");
-const browserSync = require("browser-sync");
-const cleanCss = require("gulp-clean-css");
-const uglify = require("gulp-uglify");
-const rename = require("gulp-rename");
-const htmlBeautify = require("gulp-html-beautify");
-const pug = require("gulp-pug");
-const htmlmin = require("gulp-html-minifier-terser");
+const browserSync = browserSyncLib.create();
+const sass = gulpSass(dartSass);
 
-function test(done){
+// -------------------------------------------------------------
+// gulp-check
+export function test(done) {
     console.log("Hello gulp");
     done();
 }
-
-//Sass
-function compileSass() {
-  return gulp.src("./assets/sass/**/*.scss") //入力
-    .pipe(sass())
-    .pipe(postcss([autoprefixer(), cssSorter()]))//ベンダープレフィックスの付与 cssの並び順指定
-    .pipe(mmq()) //メディアクエリをまとめる
-    .pipe(sass()) //.scssを.cssで出力
-    .pipe(gulp.dest("../assets/css")) //出力
-    .pipe(cleanCss()) //css圧縮
-    .pipe(rename({suffix: ".min"})) //ファイル名に.minを付ける
-    .pipe(gulp.dest("../assets/css/")); //圧縮ファイルを出力
+// -------------------------------------------------------------
+// Sass
+export function compileSass() {
+    return gulp.src("./assets/sass/**/*.scss") // 入力
+        .pipe(plumber({ // エラーハンドリング
+            errorHandler: notify.onError("Error: <%= error.message %>")
+        }))
+        .pipe(sass()) // Sassをコンパイル
+        .pipe(postcss([
+            autoprefixer(), // ベンダープレフィックスの付与
+            cssSorter({ order: "concentric-css" }) // CSSプロパティの並び順を整える
+        ]))
+        .pipe(mmq()) // メディアクエリをまとめる
+        .pipe(gulp.dest("../assets/css")) // 非圧縮CSSを出力
+        .pipe(cleanCss()) // CSSを圧縮
+        .pipe(rename({ suffix: ".min" })) // ファイル名に.minを付ける
+        .pipe(gulp.dest("../assets/css")) // 圧縮ファイルを出力
+        .pipe(browserSync.stream()); // 変更部分のみをリロード
 }
-
-//更新を監視
-function watch() {
-	gulp.watch("./assets/sass/**/*.scss",gulp.series(compileSass, browserReload));
-	gulp.watch("./assets/js/**/*.js", gulp.series(minJS, browserReload));
-	// gulp.watch("./assets/*.php", gulp.series(copyPHP, browserReload));
+// -------------------------------------------------------------
+// watch
+export function watch() {
+    gulp.watch("./assets/sass/**/*.scss", gulp.series(compileSass, browserReload));
+    gulp.watch("./assets/js/**/*.js", gulp.series(minJS, browserReload));
+    gulp.watch("./assets/pug/**/*.pug", gulp.series(compilePug, browserReload));
+    gulp.watch("./assets/images/*.{png,jpg,jpeg}", gulp.series(convertToWebP, browserReload));
 }
-
-//ブラウザの立ち上げ
-function browserInit(done) {
-	browserSync.init({
-		server: {
-			baseDir: "../",
+// -------------------------------------------------------------
+// browserSync
+export function browserInit(done) {
+    browserSync.init({
+        server: {
+            baseDir: "../" // 静的サイトで使用
+        },
+        // proxy: "http://localhost:8000", // WordPress開発の場合
         notify: false,
-		}
-	});
-	done();
+    });
+    done();
 }
-
-//ブラウザの自動リロード
-function browserReload(done) {
-	browserSync.reload();
-	done();
+export function browserReload(done) {
+    browserSync.reload();
+    done();
 }
-
-//JSファイルの圧縮
-function minJS() {
-    return gulp.src("./assets/js/**/*.js") //入力
-    .pipe(gulp.dest("../assets/js/")) //圧縮前のファイルを出力
-    .pipe(uglify()) //圧縮
-    .pipe(rename({suffix: ".min"}))//ファイル名に.minを付ける
-    .pipe(gulp.dest("../assets/js/")); //圧縮ファイルの出力
+// -------------------------------------------------------------
+// images-convert-webp
+export function convertToWebP() {
+    return gulp.src("./assets/images/**/*.{png,jpg,jpeg}")
+        .pipe(webp({
+            quality: 85,
+        }))
+        .pipe(gulp.dest("../assets/images/webp")); // 出力先
 }
-
+// -------------------------------------------------------------
+// JavaScript
+export function minJS() {
+    return gulp.src("./assets/js/**/*.js") // JavaScriptファイルを入力
+        .pipe(plumber({ // エラーハンドリング
+            errorHandler: notify.onError("Error: <%= error.message %>")
+        }))
+        .pipe(gulp.dest("../assets/js/")) // 圧縮前のファイルを出力
+        .pipe(uglify()) // JavaScriptを圧縮
+        .pipe(rename({ suffix: ".min" })) // ファイル名に.minを付ける
+        .pipe(gulp.dest("../assets/js")) // 圧縮後のファイルを出力
+        .pipe(browserSync.stream()); // 変更部分のみをリロード
+}
+// -------------------------------------------------------------
 // compilePug
-function compilePug() {
+export function compilePug() {
     return gulp.src(["./assets/pug/**/*.pug", "!./assets/pug/**/_*.pug"])
+        .pipe(plumber({ // エラーハンドリング
+            errorHandler: notify.onError("Error: <%= error.message %>")
+        }))
         .pipe(pug({
             pretty: true,
             basedir: "./pug"
         }))
-        .pipe(htmlBeautify({ indent_size: 4 }))
-        .pipe(gulp.dest("../"));
+        .pipe(htmlBeautify({
+            indent_size: 4
+        }))
+        .pipe(gulp.dest("../"))
+        .pipe(browserSync.stream()); // 変更部分のみをリロード
 }
-
-exports.test = test;
-exports.compileSass = compileSass;
-exports.watch = watch;
-exports.browserInit = browserInit;
-exports.browserReload = browserReload;
-exports.minJS = minJS;
-exports.develop = gulp.parallel(browserInit, watch);
-exports.compilePug = compilePug
+// -------------------------------------------------------------
+export const develop = gulp.series(browserInit, watch);
+export default develop;
