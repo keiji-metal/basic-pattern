@@ -1,5 +1,5 @@
 
-@use "variables" as *;
+@use "../global" as *;
 
 /*=========================*/
 /* base */
@@ -20,8 +20,13 @@ body {
 }
 
 html {
-  // font-size: calc(16 / 1920 * 100vw);
-  line-height: 1;
+    line-height: 1;
+    @media screen and (max-width: #{px($pc-inner-sum) - 1px}) and (min-width: #{px($breakpoint)}) {
+      font-size: calc(16 / #{$pc-inner-sum} * 100vw);
+    }
+    @media screen and (max-width: #{px($sp-camp) - 1px}) {
+      font-size: calc(16 / #{$sp-camp} * 100vw);
+    }
 }
 
 body {
@@ -57,3 +62,11 @@ table {
     width: 100%;
 }
 
+//pcではtelかけられないように
+@media (min-width: px($breakpoint)) {
+  a[href*="tel:"] {
+    pointer-events: none;
+    cursor: default;
+    text-decoration: none;
+  }
+}

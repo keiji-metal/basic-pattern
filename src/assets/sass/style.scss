@@ -1,5 +1,17 @@
-@use "foundation/f-style";
-@use "layout/l-style";
-@use "component/c-style";
-@use "project/p-style";
-@use "utility/u-style";
+//foundation
+@use "foundation/reset";
+@use "foundation/base";
+
+//layout
+@use "layout/l-header";
+@use "layout/l-drawer";
+@use "layout/l-footer";
+
+//component
+@use "component/c-section-title";
+
+//project
+@use "project/p-sample";
+
+//utility
+@use "utility/u-text";

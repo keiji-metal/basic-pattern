@@ -1,0 +1,22 @@
+@use "variables" as *;
+
+/*=========================*/
+/* 単位指定 */
+/*=========================*/
+
+@function rm($arg) {
+	@return calc($arg / 16 * 1rem);
+}
+
+@function px($arg) {
+	@return calc($arg  * 1px);
+}
+
+@function vw($arg) {
+	@return calc($arg / $pc-camp * 100vw);
+}
+
+@function vw-sp($arg) {
+	@return calc($arg / $sp-camp * 100vw);
+}
+

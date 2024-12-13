@@ -1,0 +1,55 @@
+
+@use "variables" as *;
+
+/*=========================*/
+/* media-query */
+/*=========================*/
+
+$breakpoints: (
+    "sp": "screen and (max-width: #{$breakpoint - 1px})",
+	"sp-lg": "(min-width: #{$sp-inner-sum * 1px})",
+    "pc": "(min-width: #{$breakpoint * 1px})",
+    "lg": "(min-width: #{$pc-inner-sum * 1px})"
+) !default;
+
+@mixin mq($breakpoint: sp) {
+    @media #{map-get($breakpoints, $breakpoint)} {
+        @content;
+    }
+}
+
+
+/*=========================*/
+/* z-index */
+/*=========================*/
+
+$layer : (
+    default: 1,
+    );
+@mixin z-index($key) {
+    z-index: map-get($layer, $key) ;
+}
+
+// @include z-index();
+
+// =================================
+//  font
+// =================================
+
+@mixin font($size: null, $weight: null, $height: null, $spacing: null) {
+    @if $size {
+          font-size: max(calc($size / 16 * 1rem), calc($size * 0.8px));
+          @include mq(sp) {
+              font-size: calc($size / 16 * 1rem);
+          }
+    }
+    @if $weight {
+      font-weight: $weight;
+    }
+    @if $height {
+      line-height: calc($height / $size);
+    }
+    @if $spacing {
+      letter-spacing: calc($spacing / $size * 1em);
+    }
+  }
