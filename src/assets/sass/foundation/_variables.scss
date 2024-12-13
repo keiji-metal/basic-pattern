@@ -1,3 +1,39 @@
-/*=========================*/
-/* color */
-/*=========================*/
+//_variables.scss
+$ff: 'Noto Sans JP', sans-serif; // bodyに指定するフォント
+$ff-jp: 'Noto Sans JP', sans-serif; //日本語onlyのフォント
+$ff-en: 'Roboto', sans-serif; //英語onlyのフォント
+
+
+//===========================================
+//   レイアウト (単位は不要)
+//===========================================
+$pc-inner: 1040;  // pc版inner幅
+$pc-sidePadding: 40; //pc版サイドのpadding
+$pc-inner-sum: calc($pc-inner + $pc-sidePadding * 2);
+$pc-narrow-inner: 800; //狭いinner幅
+$pc-narrow-inner-sum: calc($pc-narrow-inner + $pc-sidePadding * 2);
+$breakpoint: 768; // ブレイクポイント (pc版カンプとsp版カンプの境界)
+$sp-sidePadding: 20; //sp版サイドのpadding
+$pc-camp: 1440; // pc版のカンプサイズを入力
+$sp-camp: 375; // sp版のカンプサイズを入力
+$sp-inner: 600;
+$sp-inner-sum: calc($sp-inner + $sp-sidePadding * 2);
+$sm-breakpoint: 500; // small版ブレイクポイント
+
+//z-index
+$z-header: 100;
+$z-drawerIcon: 102;
+$z-drawer: 101;
+
+//===========================================
+//   カラー
+//===========================================
+$color-text: #313131; // テキストカラー
+$color-main: #FD7A23; //一番よく使われるカラー
+$color-bg: #E8EFF2; //全体の背景色
+$accent-color: #0C59F2; //この辺は自由に設定
+$hover-color: #25E662;
+$white: #ffffff;
+$black: #000000;
+$red: #FF0000;
+

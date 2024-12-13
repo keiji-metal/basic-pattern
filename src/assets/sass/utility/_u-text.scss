@@ -1,0 +1,58 @@
+@use "../foundation/f-style" as *;
+
+.u-text__center {
+    text-align: center !important;
+    &--sp {
+        @include mq(sp) {
+        text-align: center !important;
+        }
+    }
+    &--pc {
+        @include mq(pc) {
+        text-align: center !important;
+        }
+    }
+}
+
+  .u-text__left {
+    text-align: left !important;
+    &--sp {
+      @include mq(sp) {
+        text-align: left !important;
+      }
+    }
+    &--pc {
+      @include mq(pc) {
+        text-align: left !important;
+      }
+    }
+  }
+
+  .u-text__right {
+    text-align: right !important;
+    &--sp {
+      @include mq(sp) {
+        text-align: right !important;
+      }
+    }
+    &--pc {
+      @include mq(pc) {
+        text-align: right !important;
+      }
+    }
+  }
+
+  .u-text__nowrap {
+    white-space: nowrap;
+    &--sp {
+      @include mq(sp) {
+        white-space: nowrap;
+      }
+    }
+    &--pc {
+      @include mq(pc) {
+        white-space: nowrap;
+      }
+    }
+  }
+  
