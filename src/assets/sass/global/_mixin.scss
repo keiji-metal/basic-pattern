@@ -4,7 +4,6 @@
 /*=========================*/
 /* media-query */
 /*=========================*/
-
 $breakpoints: (
     "sp": "screen and (max-width: #{$breakpoint - 1px})",
 	"sp-lg": "(min-width: #{$sp-inner-sum * 1px})",
@@ -17,21 +16,19 @@ $breakpoints: (
         @content;
     }
 }
-
-
 /*=========================*/
 /* z-index */
 /*=========================*/
 
 $layer : (
+    z-drawerIcon: 102,
+    z-drawer: 101,
     default: 1,
     );
+
 @mixin z-index($key) {
     z-index: map-get($layer, $key) ;
 }
-
-// @include z-index();
-
 // =================================
 //  font
 // =================================

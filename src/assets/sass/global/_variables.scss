@@ -3,7 +3,7 @@ $ff-jp: 'Noto Sans JP', sans-serif; //日本語onlyのフォント
 $ff-en: 'Roboto', sans-serif; //英語onlyのフォント
 
 //===========================================
-//   レイアウト (単位は不要)
+//layout
 //===========================================
 $pc-inner: 1040;  // pc版inner幅
 $pc-sidePadding: 40; //pc版サイドのpadding
@@ -13,18 +13,13 @@ $pc-narrow-inner-sum: calc($pc-narrow-inner + $pc-sidePadding * 2);
 $breakpoint: 768; // ブレイクポイント (pc版カンプとsp版カンプの境界)
 $sp-sidePadding: 20; //sp版サイドのpadding
 $pc-camp: 1440; // pc版のカンプサイズを入力
-$sp-camp: 375; // sp版のカンプサイズを入力
+$sp-camp: 395; // sp版のカンプサイズを入力
 $sp-inner: 600;
 $sp-inner-sum: calc($sp-inner + $sp-sidePadding * 2);
 $sm-breakpoint: 500; // small版ブレイクポイント
 
-//z-index
-$z-header: 100;
-$z-drawerIcon: 102;
-$z-drawer: 101;
-
 //===========================================
-//   color
+//color
 //===========================================
 $color-text: #313131; // テキストカラー
 $color-main: #FD7A23; //一番よく使われるカラー

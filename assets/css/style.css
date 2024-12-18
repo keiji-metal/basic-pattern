@@ -161,7 +161,19 @@ img {
 
 /*=========================*/
 
-/* color */
+/* media-query */
+
+/*=========================*/
+
+/*=========================*/
+
+/* z-index */
+
+/*=========================*/
+
+/*=========================*/
+
+/* 単位指定 */
 
 /*=========================*/
 
@@ -194,7 +206,7 @@ body {
 	max-width: 100%;
 	min-height: 100vh;
 	overflow-x: hidden;
-	color: #1a1a1a;
+	color: #000000;
 	font-weight: 500;
 	line-height: 1;
 	font-family: "Noto Serif JP", serif;
@@ -222,21 +234,90 @@ table {
 	table-layout: fixed;
 }
 
-/*=========================*/
+.l-header {
+	padding: 1.25rem;
+	height: 5rem;
+}
 
-/* media-query */
+.footer__nav-item {
+	font-size: 2.5rem;
+}
 
-/*=========================*/
+.u-text__center {
+	text-align: center !important;
+}
 
-/*=========================*/
+.u-text__left {
+	text-align: left !important;
+}
 
-/* z-index */
+.u-text__right {
+	text-align: right !important;
+}
 
-/*=========================*/
+.u-text__nowrap {
+	white-space: nowrap;
+}
 
-/*=========================*/
+@media (min-width: 768px) {
 
-/* clamp */
+a[href*="tel:"] {
+	cursor: default;
+	pointer-events: none;
+	text-decoration: none;
+}
 
-/*=========================*/
+.u-text__center--pc {
+	text-align: center !important;
+}
+
+.u-text__left--pc {
+	text-align: left !important;
+}
+
+.u-text__right--pc {
+	text-align: right !important;
+}
+
+.u-text__nowrap--pc {
+	white-space: nowrap;
+}
+
+}
+
+@media screen and (max-width: 1119px) and (min-width: 768px) {
+
+html {
+	font-size: calc(16 / 1120 * 100vw);
+}
+
+}
+
+@media screen and (max-width: 767px) {
+
+.u-text__center--sp {
+	text-align: center !important;
+}
+
+.u-text__left--sp {
+	text-align: left !important;
+}
+
+.u-text__right--sp {
+	text-align: right !important;
+}
+
+.u-text__nowrap--sp {
+	white-space: nowrap;
+}
+
+}
+
+@media screen and (max-width: 394px) {
+
+html {
+	font-size: calc(16 / 395 * 100vw);
+}
+
+}
 
